@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 25, 2020 9:54:21 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pojos.Destination" table="destination" catalog="conference_manager" optimistic-lock="version">
+        <id name="idDestination" type="java.lang.Integer">
+            <column name="idDestination" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="string">
+            <column name="name" length="45" />
+        </property>
+        <property name="address" type="string">
+            <column name="address" length="100" />
+        </property>
+        <property name="size" type="java.lang.Integer">
+            <column name="size" />
+        </property>
+        <set name="conferences" table="conference" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idDestination" />
+            </key>
+            <one-to-many class="pojos.Conference" />
+        </set>
+    </class>
+</hibernate-mapping>

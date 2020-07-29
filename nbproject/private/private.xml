@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="4">
+        <file>
+            <url>src/conferenceproject/JInternalFrameAddAccount.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>155</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>src/conferenceproject/JFrameMain.java</url>
+            <bookmark id="2">
+                <name/>
+                <line>490</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>src/pojos/Conference.java</url>
+            <bookmark id="3">
+                <name/>
+                <line>29</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>src/conferenceproject/JDialoInfoConf.java</url>
+            <bookmark id="4">
+                <name/>
+                <line>432</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/D:/6.%20Java/code/do%20an/conferenceProject/src/dao/conferenceDao.java</file>
+            <file>file:/D:/6.%20Java/code/do%20an/conferenceProject/src/conferenceproject/JDialoInfoConf.java</file>
+            <file>file:/D:/6.%20Java/code/do%20an/conferenceProject/src/conferenceproject/JDialogLogin.java</file>
+            <file>file:/D:/6.%20Java/code/do%20an/conferenceProject/src/pojos/Conference.java</file>
+            <file>file:/D:/6.%20Java/code/do%20an/conferenceProject/src/conferenceproject/JPanelCon.java</file>
+            <file>file:/D:/6.%20Java/code/do%20an/conferenceProject/src/conferenceproject/JDialogListCon.java</file>
+            <file>file:/D:/6.%20Java/code/do%20an/conferenceProject/src/conferenceproject/JFrameMain.java</file>
+            <file>file:/D:/6.%20Java/code/do%20an/conferenceProject/src/conferenceproject/JDialogCardCon.java</file>
+        </group>
+    </open-files>
+</project-private>
