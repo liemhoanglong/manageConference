@@ -8,6 +8,7 @@ package conferenceproject;
 import java.util.*;
 import dao.*;
 import static java.lang.Integer.parseInt;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import pojos.*;
 
@@ -27,7 +28,12 @@ public class JDialogAddConference extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
-
+        List<Destination> listDes = desD.findAll();
+        String[] a = new String[listDes.size()];
+        for (int i = 0; i < listDes.size(); i++) {
+            a[i] = listDes.get(i).getName();
+        }
+        jComboBoxDes.setModel(new DefaultComboBoxModel<>(a));
     }
 
     /**
@@ -43,7 +49,6 @@ public class JDialogAddConference extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
         nameC = new javax.swing.JTextField();
-        loC = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jButtonUpdate = new javax.swing.JButton();
@@ -56,9 +61,10 @@ public class JDialogAddConference extends javax.swing.JDialog {
         idC = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        limitC = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         allInfoC = new javax.swing.JTextArea();
+        jComboBoxDes = new javax.swing.JComboBox<>();
+        jSpinner1 = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Thêm hội nghị");
@@ -74,13 +80,6 @@ public class JDialogAddConference extends javax.swing.JDialog {
         nameC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nameCActionPerformed(evt);
-            }
-        });
-
-        loC.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        loC.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loCActionPerformed(evt);
             }
         });
 
@@ -140,13 +139,6 @@ public class JDialogAddConference extends javax.swing.JDialog {
         jLabel16.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel16.setText("Số lượng:");
 
-        limitC.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        limitC.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                limitCActionPerformed(evt);
-            }
-        });
-
         allInfoC.setColumns(20);
         allInfoC.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         allInfoC.setLineWrap(true);
@@ -154,14 +146,28 @@ public class JDialogAddConference extends javax.swing.JDialog {
         allInfoC.setWrapStyleWord(true);
         jScrollPane2.setViewportView(allInfoC);
 
+        jComboBoxDes.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jComboBoxDes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
+
+        jSpinner1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel());
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(615, Short.MAX_VALUE)
-                .addComponent(jButtonUpdate)
-                .addGap(597, 597, 597))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(210, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonUpdate)
+                        .addGap(597, 597, 597))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jComboBoxDes, 0, 1076, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jSpinner1)
+                        .addContainerGap())))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -176,8 +182,6 @@ public class JDialogAddConference extends javax.swing.JDialog {
                         .addComponent(jLabel14))
                     .addGap(50, 50, 50)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(limitC, javax.swing.GroupLayout.PREFERRED_SIZE, 1077, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(loC, javax.swing.GroupLayout.PREFERRED_SIZE, 1077, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(imgC, javax.swing.GroupLayout.PREFERRED_SIZE, 1077, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1077, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(infoC, javax.swing.GroupLayout.PREFERRED_SIZE, 1077, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -189,7 +193,11 @@ public class JDialogAddConference extends javax.swing.JDialog {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(676, Short.MAX_VALUE)
+                .addGap(529, 529, 529)
+                .addComponent(jComboBoxDes, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                .addGap(31, 31, 31)
+                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
                 .addComponent(jButtonUpdate)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,15 +228,11 @@ public class JDialogAddConference extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel19))
-                    .addGap(30, 30, 30)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(loC, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel21))
-                    .addGap(30, 30, 30)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(limitC, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel16))
-                    .addGap(82, 82, 82)))
+                    .addGap(38, 38, 38)
+                    .addComponent(jLabel21)
+                    .addGap(46, 46, 46)
+                    .addComponent(jLabel16)
+                    .addGap(90, 90, 90)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -261,10 +265,6 @@ public class JDialogAddConference extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_nameCActionPerformed
 
-    private void loCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loCActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_loCActionPerformed
-
     private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
         Conference con = new Conference();
         con.setName(this.nameC.getText());
@@ -273,35 +273,26 @@ public class JDialogAddConference extends javax.swing.JDialog {
         con.setAllInfo(this.allInfoC.getText());
         con.setImg(this.imgC.getText());
 
+        String a = this.jComboBoxDes.getSelectedItem().toString();
         Destination d = new Destination();
-        d = desD.find(this.loC.getText());
+//        d = desD.find(this.loC.getText());
+        d = desD.findByName(a);
         con.setDestination(d);
-//        System.out.println(d.getName());
-
         Date date = this.jDateChooser.getDate();
-//        System.out.println(date);
         con.setDate(date);
-//        System.out.println(con.getDate());
 
-        //        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        //        try {
-        //            System.out.println(this.dateC.getText());
-        //            Date date = formatter.parse(this.dateC.getText());
-        //            System.out.println(date);
-        //
-        //            con.setDate(date);
-        //        } catch (ParseException ex) {
-        //            Logger.getLogger(JDialoInfoConf.class.getName()).log(Level.SEVERE, null, ex);
-        //        }
-        con.setMax(parseInt(this.limitC.getText()));
-//        System.out.println(con.getMax());
+        int max = parseInt(jSpinner1.getValue().toString());
+        con.setMax(max);
 
-        if (this.conD.save(con)) {
-            JOptionPane.showMessageDialog(null, "Thêm hội nghị thành công! :)");
-            this.setVisible(false);
-
+        if (max <= d.getSize()) {
+            if (this.conD.save(con)) {
+                JOptionPane.showMessageDialog(null, "Thêm hội nghị thành công! :)");
+                this.setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(null, "Thêm địa điểm thất bại");
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "Thêm địa điểm thất bại");
+            JOptionPane.showMessageDialog(null, "Số lượng tham gia phải bé hơn địa điểm\nSức chứa của địa điểm trên là " + max);
         }
     }//GEN-LAST:event_jButtonUpdateActionPerformed
 
@@ -316,10 +307,6 @@ public class JDialogAddConference extends javax.swing.JDialog {
     private void idCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idCActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_idCActionPerformed
-
-    private void limitCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limitCActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_limitCActionPerformed
 
     /**
      * @param args the command line arguments
@@ -369,6 +356,7 @@ public class JDialogAddConference extends javax.swing.JDialog {
     private javax.swing.JTextField imgC;
     private javax.swing.JTextField infoC;
     private javax.swing.JButton jButtonUpdate;
+    private javax.swing.JComboBox<String> jComboBoxDes;
     private com.toedter.calendar.JDateChooser jDateChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
@@ -381,8 +369,7 @@ public class JDialogAddConference extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField limitC;
-    private javax.swing.JTextField loC;
+    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTextField nameC;
     // End of variables declaration//GEN-END:variables
 }

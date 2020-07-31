@@ -22,6 +22,8 @@ import pojos.*;
 public class JDialogUserCon extends javax.swing.JDialog {
 
     private UserConferenceDao userConD = new UserConferenceDao();
+    private conferenceDao conD = new conferenceDao();
+    private List<UserConference> ls;
 
     public void getDataCon() {
         DefaultTableModel dtm = new DefaultTableModel() {
@@ -38,7 +40,6 @@ public class JDialogUserCon extends javax.swing.JDialog {
         dtm.addColumn("Sức chứa");
         dtm.addColumn("tên người tham gia");
         dtm.addColumn("đã duyệt");
-        List<UserConference> ls;
         ls = this.userConD.findAll();
 //        System.out.println("test get " + ls.size());
         for (UserConference con : ls) {
@@ -275,7 +276,11 @@ public class JDialogUserCon extends javax.swing.JDialog {
         this.nameCon.setText(a.getConference().getName());
         this.nameUser.setText(a.getUser().getName());
         this.max.setText(a.getConference().getMax().toString());
-        this.date.setText(a.getConference().getDate().toString());
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String s = formatter.format(a.getConference().getDate());
+//        System.out.println(s);
+        this.date.setText(s);
         this.type.setText(a.getState().toString());
     }//GEN-LAST:event_jTableUserConMouseClicked
 
@@ -300,16 +305,30 @@ public class JDialogUserCon extends javax.swing.JDialog {
             int check = date.compareTo(date1);
 //            System.out.println(check);
             if (check > 0) {
-                a.setState(1);
-                if (this.userConD.update(a)) {
-                    JOptionPane.showMessageDialog(null, "Duyệt tài khoản thành công");
-                    getDataCon();
-                    this.nameCon.setText("");
-                    this.nameUser.setText("");
-                    this.max.setText("");
-                    this.type.setText("");
+                Conference con1 = conD.findByName(this.nameCon.getText());
+                int countP = 0;
+                for (UserConference con2 : ls) {
+                    if (con2.getConference().getIdConference().equals(con1.getIdConference()) && con2.getState() == 1) {
+                        countP++;
+                    }
+                }
+//                System.out.println(countP);
+                if (countP < con1.getMax()) {
+                    a.setState(1);
+                    if (this.userConD.update(a)) {
+                        JOptionPane.showMessageDialog(null, "Duyệt tài khoản thành công");
+                        getDataCon();
+                        this.nameCon.setText("");
+                        this.nameUser.setText("");
+                        this.max.setText("");
+                        this.date.setText("");
+                        this.type.setText("");
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Duyệt tài khoản thất bại");
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Duyệt tài khoản thất bại");
+                    JOptionPane.showMessageDialog(null, "Số lượng người tham gia đã đầy");
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Duyệt tham gia thất bại. Vì đã quá hạn!");

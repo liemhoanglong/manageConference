@@ -183,12 +183,12 @@ public class JDialogLogin extends javax.swing.JDialog {
                 if (usernow.getType() == 3) {
                     JOptionPane.showMessageDialog(null, "Tài khoản đã bị chặn bởi Admin!");
                     usernow = null;
-                    JFrameMain f = new JFrameMain();
-                    f.setVisible(true);
+//                    JFrameMain f = new JFrameMain();
+//                    f.setVisible(true);
                 } else {
                     if (checkin == 0) {
-                        JFrameMain f = new JFrameMain();
-                        f.setVisible(true);
+//                        JFrameMain f = new JFrameMain();
+//                        f.setVisible(true);
                         this.setVisible(false);
                     } else {
                         this.setVisible(false);

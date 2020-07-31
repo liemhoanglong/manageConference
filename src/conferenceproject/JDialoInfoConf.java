@@ -44,6 +44,7 @@ public class JDialoInfoConf extends javax.swing.JDialog {
         initComponents();
         this.jButtonGo.setVisible(true);
         this.jLabel3.setVisible(false);
+        this.jLabel4.setVisible(false);
 
 //        System.out.println(pa);
         //nếu không là user loại 1 hay admin sẽ ko được chỉnh sửa 
@@ -135,6 +136,7 @@ public class JDialoInfoConf extends javax.swing.JDialog {
         jButtonGo = new javax.swing.JButton();
         jButtonListGo = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -269,6 +271,11 @@ public class JDialoInfoConf extends javax.swing.JDialog {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Số lượng đăng ký đã được duyệt đã đầy");
 
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Đã hết hạn đăng ký tham gia");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -317,6 +324,11 @@ public class JDialoInfoConf extends javax.swing.JDialog {
                 .addGap(307, 307, 307)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 771, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(377, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGap(317, 317, 317)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 771, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(367, Short.MAX_VALUE)))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -372,6 +384,11 @@ public class JDialoInfoConf extends javax.swing.JDialog {
                     .addComponent(jButtonGo)
                     .addComponent(jButtonUpdate))
                 .addGap(23, 23, 23))
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                    .addContainerGap(839, Short.MAX_VALUE)
+                    .addComponent(jLabel4)
+                    .addGap(76, 76, 76)))
         );
 
         jScrollPane1.setViewportView(jPanel3);
@@ -442,44 +459,48 @@ public class JDialoInfoConf extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonUpdateActionPerformed
 
     private void jButtonGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGoActionPerformed
-        if (usernow == null) {
-            checkin = 1;
-            JOptionPane.showMessageDialog(null, "Bạn phải đăng nhập trước khi đăng kí");
-            JDialogLogin f = new JDialogLogin(this.jFrame1, rootPaneCheckingEnabled);
-            f.setVisible(true);
-        } else {
-            String idUser = usernow.getIdUser().toString();
-            String idCon = this.idC.getText();
-//            UserConferenceId aa = new UserConferenceId(parseInt(idCon), parseInt(idUser));
-//            UserConference a = new UserConference(aa, confNow, usernow);
-//            a = this.userConD.find(parseInt(idCon), parseInt(idUser));
-//            a.setState(0);
+        this.jLabel3.setVisible(false);
+        this.jLabel4.setVisible(false);
 
-//            UserConference ucd = UserConferenceDao.find(usernow.getIdUser(), parseInt(idCon));
-            List<UserConference> ls = this.userConD.findAll();
-            int count = 0;
-            for (UserConference con : ls) {
-                //kiểm tra hội nghị có trùng tên với cái được chọn và trạng thái được duyệt mới được cộng 
-                if (con.getConference().getIdConference().equals(parseInt(idCon)) && con.getState() == 1) {
-                    count++;
-                }
+        String idCon = this.idC.getText();
+        List<UserConference> ls = this.userConD.findAll();
+        int count = 0;
+        for (UserConference con : ls) {
+            //kiểm tra hội nghị có trùng tên với cái được chọn và trạng thái được duyệt mới được cộng 
+            if (con.getConference().getIdConference().equals(parseInt(idCon)) && con.getState() == 1) {
+                count++;
             }
+        }
 //            System.out.println(count);
 //            System.out.println(confNow.getMax());
+        Date date1 = new Date();
+//            System.out.println(date1.toString());
+        int check = confNow.getDate().compareTo(date1);
+        System.out.println(check);
+        if (check > 0) {
             if (count < confNow.getMax()) {
-                if (this.userConD.save(idUser, idCon)) {
-                    JOptionPane.showMessageDialog(null, "Đăng kí tham gia thành công");
+                if (usernow == null) {
+                    checkin = 1;
+                    JOptionPane.showMessageDialog(null, "Bạn phải đăng nhập trước khi đăng kí");
+                    JDialogLogin f = new JDialogLogin(this.jFrame1, rootPaneCheckingEnabled);
+                    f.setVisible(true);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Đăng kí tham gia thất bại");
+                    String idUser = usernow.getIdUser().toString();
+                    if (this.userConD.save(idUser, idCon)) {
+                        JOptionPane.showMessageDialog(null, "Đăng kí tham gia thành công");
+                    } else {
+
+                        JOptionPane.showMessageDialog(null, "Bạn đã đăng kí tham gia rồi!");
+                    }
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Số lượng đăng kí đã đầy");
                 this.jLabel3.setVisible(true);
-
             }
-
+        } else {
+            this.jLabel4.setVisible(true);
+            JOptionPane.showMessageDialog(null, "Duyệt tham gia thất bại. Vì đã quá hạn!");
         }
-
     }//GEN-LAST:event_jButtonGoActionPerformed
 
     private void jButtonListGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonListGoActionPerformed
@@ -551,6 +572,7 @@ public class JDialoInfoConf extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

@@ -84,7 +84,7 @@ public class JDialogAccount extends javax.swing.JDialog {
         jButtonSearchType = new javax.swing.JButton();
         jButtonSearchName = new javax.swing.JButton();
         jTextFieldSearchName = new javax.swing.JTextField();
-        jTextFieldSearchType = new javax.swing.JTextField();
+        jComboBoxSearchType = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Danh sách tài khoản");
@@ -166,6 +166,7 @@ public class JDialogAccount extends javax.swing.JDialog {
         jLabel18.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel18.setText("Loại:");
 
+        type.setEditable(false);
         type.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         type.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -208,17 +209,14 @@ public class JDialogAccount extends javax.swing.JDialog {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(jLabel15)
-                                        .addGap(115, 115, 115))
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel14)
-                                            .addComponent(jLabel17)
-                                            .addComponent(jLabel13)
-                                            .addComponent(jLabel16)
-                                            .addComponent(jLabel18))
-                                        .addGap(44, 44, 44)))
+                                    .addComponent(jLabel15)
+                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel14)
+                                        .addComponent(jLabel17)
+                                        .addComponent(jLabel13)
+                                        .addComponent(jLabel16)
+                                        .addComponent(jLabel18)))
+                                .addGap(44, 44, 44)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(email)
                                     .addComponent(id, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
@@ -301,12 +299,7 @@ public class JDialogAccount extends javax.swing.JDialog {
 
         jTextFieldSearchName.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
-        jTextFieldSearchType.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jTextFieldSearchType.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldSearchTypeActionPerformed(evt);
-            }
-        });
+        jComboBoxSearchType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -323,9 +316,9 @@ public class JDialogAccount extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextFieldSearchType, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE)
-                    .addComponent(jTextFieldSearchName))
-                .addGap(18, 18, Short.MAX_VALUE)
+                    .addComponent(jTextFieldSearchName, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE)
+                    .addComponent(jComboBoxSearchType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonSearchType)
                     .addComponent(jButtonSearchName))
@@ -345,9 +338,9 @@ public class JDialogAccount extends javax.swing.JDialog {
                     .addComponent(jTextFieldSearchName, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonSearchName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldSearchType, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonSearchType))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonSearchType)
+                    .addComponent(jComboBoxSearchType))
                 .addGap(14, 14, 14)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -423,7 +416,8 @@ public class JDialogAccount extends javax.swing.JDialog {
         dtm.addColumn("Tên đăng nhập");
         dtm.addColumn("Email");
         dtm.addColumn("Loại");
-        String a = this.jTextFieldSearchType.getText();
+//        String a = this.jTextFieldSearchType.getText();
+        String a = this.jComboBoxSearchType.getSelectedItem().toString();
         System.out.println(a);
         for (User acc : this.accD.findByType(a)) {
             dtm.addRow(new Object[]{acc.getIdUser(), acc.getName(), acc.getUsername(), acc.getEmail(), acc.getType()});
@@ -435,7 +429,12 @@ public class JDialogAccount extends javax.swing.JDialog {
     }
 
     private void jButtonSearchTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchTypeActionPerformed
+//        System.out.println(jTextFieldSearchType.getText());
+//        if (this.jTextFieldSearchType.getText() == null) {
+//            getUserData();
+//        } else {
         getUserDataByType();
+//        }
     }//GEN-LAST:event_jButtonSearchTypeActionPerformed
 
     public void getUserDataByName() {
@@ -463,10 +462,6 @@ public class JDialogAccount extends javax.swing.JDialog {
     private void jButtonSearchNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchNameActionPerformed
         getUserDataByName();
     }//GEN-LAST:event_jButtonSearchNameActionPerformed
-
-    private void jTextFieldSearchTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSearchTypeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldSearchTypeActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         String idAcc = this.id.getText();
@@ -559,6 +554,7 @@ public class JDialogAccount extends javax.swing.JDialog {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButtonSearchName;
     private javax.swing.JButton jButtonSearchType;
+    private javax.swing.JComboBox<String> jComboBoxSearchType;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -572,7 +568,6 @@ public class JDialogAccount extends javax.swing.JDialog {
     private javax.swing.JSlider jSlider1;
     private javax.swing.JTable jTableListAccount;
     private javax.swing.JTextField jTextFieldSearchName;
-    private javax.swing.JTextField jTextFieldSearchType;
     private javax.swing.JTextField type;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
